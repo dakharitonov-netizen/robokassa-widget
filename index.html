@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: transparent;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    var urlParams = new URLSearchParams(window.location.search);
+    var sum = urlParams.get('sum') || 0;
+    
+    if (sum > 0) {
+      var script = document.createElement('script');
+      script.src = 'https://auth.robokassa.ru/Merchant/PaymentForm/FormFLS.js?EncodedInvoiceId=pqpiw016DE-8o-NPWjJTZw&DefaultSum=' + sum;
+      document.body.appendChild(script);
+    }
+  </script>
+</body>
+</html>
