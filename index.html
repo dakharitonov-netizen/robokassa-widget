@@ -62,13 +62,6 @@
       color: #95a5a6;
       margin-top: 20px;
     }
-    .payment-logo {
-      margin-top: 15px;
-    }
-    .payment-logo img {
-      height: 30px;
-      opacity: 0.7;
-    }
   </style>
 </head>
 <body>
@@ -83,22 +76,14 @@
     var urlParams = new URLSearchParams(window.location.search);
     var sum = parseInt(urlParams.get('sum')) || 1000;
     
-    // Показываем сумму
     document.getElementById('sum-display').textContent = sum.toLocaleString('ru-RU') + ' ₽';
     
-    // Формируем ссылку на оплату Робокассы
-    // Замените ВАШИ_ДАННЫЕ на реальные данные из личного кабинета Робокассы
-    var merchantLogin = 'ваш_логин_магазина';
-    var outSum = sum;
-    var invId = 0;
-    var description = 'Консультация';
-    
     var payUrl = 'https://auth.robokassa.ru/Merchant/Index.aspx'
-      + '?MerchantLogin=' + encodeURIComponent(merchantLogin)
-      + '&OutSum=' + outSum
-      + '&InvId=' + invId
-      + '&Description=' + encodeURIComponent(description)
-      + '&Culture=ru';
+      + '?MerchantLogin=OlgaBogatayaPRO'
+      + '&OutSum=' + sum
+      + '&Description=' + encodeURIComponent('Консультация')
+      + '&Culture=ru'
+      + '&Encoding=utf-8';
     
     document.getElementById('pay-button').href = payUrl;
   </script>
