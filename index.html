@@ -34,20 +34,40 @@
       margin-bottom: 10px;
     }
     .payment-sum {
-      font-size: 36px;
+      font-size: 42px;
       font-weight: bold;
       color: #667eea;
       margin-bottom: 30px;
     }
-    .payment-widget {
-      display: flex;
-      justify-content: center;
+    .pay-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+      color: white;
+      font-size: 20px;
+      font-weight: 700;
+      padding: 18px 50px;
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(86, 171, 47, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
       margin-bottom: 20px;
-      min-height: 50px;
+    }
+    .pay-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(86, 171, 47, 0.5);
+      color: white;
     }
     .payment-secure {
-      font-size: 12px;
+      font-size: 14px;
       color: #95a5a6;
+      margin-top: 20px;
+    }
+    .payment-logo {
+      margin-top: 15px;
+    }
+    .payment-logo img {
+      height: 30px;
+      opacity: 0.7;
     }
   </style>
 </head>
@@ -55,9 +75,7 @@
   <div class="payment-box">
     <h1 class="payment-title">Сумма к оплате:</h1>
     <div class="payment-sum" id="sum-display">0 ₽</div>
-    <div class="payment-widget" id="widget-container">
-      <script id="robokassa-script" type="text/javascript" src="https://auth.robokassa.ru/Merchant/PaymentForm/FormFLS.js?EncodedInvoiceId=pqpiw016DE-8o-NPWjJTZw&DefaultSum=1000"></script>
-    </div>
+    <a id="pay-button" class="pay-button" href="#">Оплатить</a>
     <p class="payment-secure">🔒 Безопасная оплата через Робокассу</p>
   </div>
 
@@ -65,12 +83,24 @@
     var urlParams = new URLSearchParams(window.location.search);
     var sum = parseInt(urlParams.get('sum')) || 1000;
     
+    // Показываем сумму
     document.getElementById('sum-display').textContent = sum.toLocaleString('ru-RU') + ' ₽';
     
-    var oldScript = document.getElementById('robokassa-script');
-    if (oldScript) {
-      oldScript.src = 'https://auth.robokassa.ru/Merchant/PaymentForm/FormFLS.js?EncodedInvoiceId=pqpiw016DE-8o-NPWjJTZw&DefaultSum=' + sum;
-    }
+    // Формируем ссылку на оплату Робокассы
+    // Замените ВАШИ_ДАННЫЕ на реальные данные из личного кабинета Робокассы
+    var merchantLogin = 'ваш_логин_магазина';
+    var outSum = sum;
+    var invId = 0;
+    var description = 'Консультация';
+    
+    var payUrl = 'https://auth.robokassa.ru/Merchant/Index.aspx'
+      + '?MerchantLogin=' + encodeURIComponent(merchantLogin)
+      + '&OutSum=' + outSum
+      + '&InvId=' + invId
+      + '&Description=' + encodeURIComponent(description)
+      + '&Culture=ru';
+    
+    document.getElementById('pay-button').href = payUrl;
   </script>
 </body>
 </html>
