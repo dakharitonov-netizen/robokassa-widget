@@ -43,6 +43,7 @@
       display: flex;
       justify-content: center;
       margin-bottom: 20px;
+      min-height: 50px;
     }
     .payment-secure {
       font-size: 12px;
@@ -54,24 +55,21 @@
   <div class="payment-box">
     <h1 class="payment-title">Сумма к оплате:</h1>
     <div class="payment-sum" id="sum-display">0 ₽</div>
-    <div class="payment-widget" id="widget-container"></div>
+    <div class="payment-widget" id="widget-container">
+      <script id="robokassa-script" type="text/javascript" src="https://auth.robokassa.ru/Merchant/PaymentForm/FormFLS.js?EncodedInvoiceId=pqpiw016DE-8o-NPWjJTZw&DefaultSum=1000"></script>
+    </div>
     <p class="payment-secure">🔒 Безопасная оплата через Робокассу</p>
   </div>
 
   <script>
     var urlParams = new URLSearchParams(window.location.search);
-    var sum = parseInt(urlParams.get('sum')) || 0;
+    var sum = parseInt(urlParams.get('sum')) || 1000;
     
-    // Показываем сумму
-    var sumDisplay = document.getElementById('sum-display');
-    sumDisplay.textContent = sum.toLocaleString('ru-RU') + ' ₽';
+    document.getElementById('sum-display').textContent = sum.toLocaleString('ru-RU') + ' ₽';
     
-    // Загружаем виджет Робокассы
-    if (sum > 0) {
-      var container = document.getElementById('widget-container');
-      var script = document.createElement('script');
-      script.src = 'https://auth.robokassa.ru/Merchant/PaymentForm/FormFLS.js?EncodedInvoiceId=pqpiw016DE-8o-NPWjJTZw&DefaultSum=' + sum;
-      container.appendChild(script);
+    var oldScript = document.getElementById('robokassa-script');
+    if (oldScript) {
+      oldScript.src = 'https://auth.robokassa.ru/Merchant/PaymentForm/FormFLS.js?EncodedInvoiceId=pqpiw016DE-8o-NPWjJTZw&DefaultSum=' + sum;
     }
   </script>
 </body>
